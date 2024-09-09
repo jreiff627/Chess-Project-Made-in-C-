@@ -1,0 +1,40 @@
+#include "EnemyPath.h"
+#include <ctype.h>
+#include <math.h>
+#include <ncurses.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#define BOARD_SIZE 8
+
+//prevent king from moving to a slot that will be attacked
+/*
+X king destpostion
+Y king destpostion
+
+How to define enemy Path?
+<enemy path>
+look at the kings dest postion that is plans on moving towards, then scan in a particular direction. i.e. the row, colum, diagonal. or more.
+placing the origin or tail of the vector from the dest postion, and then the tip of the vector at those spots checked before being valid.
+
+there needs to be a heirechy of scanning. i.e,
+check for :
+pawns 
+knights
+bishop
+
+
+
+
+
+while(kingXdest != enemy path){
+    validity = 1;
+    i++;
+} else{
+validity =0
+}
+
+
+
+
+*/

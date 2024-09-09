@@ -1,0 +1,95 @@
+The Purpose of this code is to create a playable chess game between two players. Below is a description of the logic of the program as well as which files hold which data\functions. 
+
+The program generates the predefined two-dimensional array, storing each of the white pieces as a single lowercase character, the black pieces as a single uppercase letter,and the blank spaces as ' '. In the PrintingBoard.h file, the program reads through the double array, and converts the characters to unicode as it prints out the double array into the chess board. 
+
+In the main file is where we prompt the user for input as to which piece they would like to move. We check the letter and number are valid with the layout of the board before trying to run them through the check functions. 
+
+All of the checks for each piece and it's movement are in the PieceMovement files (W for white pieces and B for black pieces). The function for the piece that was chosen runs checks to see that the move is valid to the piece type, and the path it is taking is clear. If both of those are true, the function will return a variable of 1 labled validity. If either of those are false the function returns zero along with outputting a new window with an error message for the player about what went wrong. Once the function returns 1, it sets the current space in the array equal to ' ' and the new space in the array equal to the character corresponding to the piece moved. 
+
+When a piece is 'captured', the program erases it off the board and adds the appropriate point value to the team that took the piece. All if this coding is stored in the CapturingEnemy files. The Scores are saved as a global variable in the file, and the PrintingBoard.h calls a function to get the value of the score from the CapturingEnemy File as it is printing the board.
+
+The error messages in this program are used to alert the user when they are trying to make an illegal move or the king is in check. 
+
+
+Before every turn, the program runs the enemy path function that looks to see if the 
+king is in check. It takes the coordinates of the king and checks the diagonal for 
+either a pawn, bishop, or queen of the opposite color. It uses a function called CheckKingSafety. If it sees a different, non-threatening piece it will break out of the check on that diagonal. It also checks 
+straight out for a queen or rook, as well as checking all the L-shapes for knights. If 
+there is an enemy it returns a value specific to the enemy (1-pawn, 2-knight, 3-rook, 
+4-bishop, 5-queen, 6-king). The functions return 0 if there is no threat. If zero is not returned, the program initiates the process to see if it is checkmate or just check.
+The program sees checkmate in three steps:
+
+1.) Can king move to another spot that will not put king in check?
+  This step is performed by a function in the CheckMate file. Once the king is 
+  officially in check, this function is performed to see if the king can escape. The 
+  array of the board is copied into a testing array. The King is then moved inside the 
+  array to each empty space, and the check functions are called to see if after the 
+  movement it is still in check. If it is not in check, there is obviously a space the 
+  king can move to, meaning it is not checkmate. 
+
+2.) Can the threat be neutralized?
+ If the king is in check, and cannot move out of the way, these functions are run to 
+ see if the piece can be taken out. The Check function saves the coordinates of the 
+ threatening piece, when it is seen in the system. It takes these coordinates and runs 
+ them through the same king check function, to see if the square is in danger by any 
+ pieces. If the square is in danger, than the piece can be taken out, and the king is 
+ not in checkmate.
+
+3.) Can a piece be moved to block the path to the king?
+ If the king is in check, cannot move out of harms way, and the threat can not be 
+ eliminated, this function is run. It looks at the type of piece that is causing the 
+ threat and the location. It then checks every square between the enemy piece and the 
+ king, sending the coordinates to the checkPieceSafety function in the CheckMate file to see if each square 
+ is 'under attack' or not. If the square is 'under attack' a piece can move there, therefore getting between 
+ the threat and the king, protecting the king. If none of the squares are under attack, no piece can move in 
+ the way and the game is finished with checkmate. 
+
+HeaderFiles with functions inside:
+
+Main.c
+  -Forfeit
+  -Intialize board
+  -Menu
+  -Clear screen
+
+PrintingBoard.h
+  -PrintBoard
+  -Unicode
+  -Score Printing
+  
+PieceMovement.h
+  -Pawn (W/B)
+    -En passant
+    -Promoting
+  -Knight (W/B)
+  -Rook (W/B)
+  -Bishop (W/B)
+  -King (W/B)
+    -check for EnemyPath
+  -Move piece validity (W/B)
+
+EnemyPath.h (Used for King Check)
+  -Pawn movement(W/B)
+  -Knight movement(W/B)
+  -Rook movement(W/B)
+  -Bishop movement(W/B)
+  -Queen movement (W/B)
+  -King movement (W/B)
+
+SpecialMovemenent.h
+  -findKingRow (W/B)
+  -findKingCol (W/B)
+  -Check King Safety (W/B)
+  -Castling
+
+Checkmate.h
+  - Can KingMove (W/B)
+  - Check Piece Safety (W/B)
+  - RookBlock (W/B)
+  - BishopBlock (W/B)
+  
+CapturingEnemy.h
+  -CapturingEnemy (W/B)
+  -ScoreCheck (W/B)
+
+  2650 lines of code
